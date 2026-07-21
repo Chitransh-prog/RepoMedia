@@ -96,20 +96,6 @@ export async function discoverByGenre(type: MediaType, genreIds: number[]): Prom
   return data.results.map((r: any) => normalize(r, type));
 }
 
-export async function getGenres(type: MediaType): Promise<{ id: number; name: string }[]> {
-  const data = await tmdbFetch(`/genre/${type}/list`);
-  return data.genres;
-}
-
-export async function discoverByGenre(type: MediaType, genreIds: number[]): Promise<MediaItem[]> {
-  if (!genreIds.length) return [];
-  const data = await tmdbFetch(`/discover/${type}`, {
-    with_genres: genreIds.join(","),
-    sort_by: "popularity.desc",
-  });
-  return data.results.map((r: any) => normalize(r, type));
-}
-
 export async function getDetail(type: MediaType, id: string): Promise<MediaDetail> {
   // Core call — if this fails, the title genuinely doesn't exist for this type/id.
   const detail = await tmdbFetch(`/${type}/${id}`);

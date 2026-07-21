@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { getMergedGenres, discoverByGenre, searchMulti } from "@/lib/tmdb";
 import { interpretPreference } from "@/lib/ai";
 import { MediaItem, MediaType } from "@/types/media";
+import { InterpretedPreference } from "@/lib/ai";
+
 
 export async function POST(req: NextRequest) {
   const { query, mode } = await req.json();
@@ -13,13 +15,13 @@ export async function POST(req: NextRequest) {
   const merged = await getMergedGenres();
   const genreNames = merged.map((g) => g.name);
 
-  let interpreted;
-  try {
+    let interpreted: InterpretedPreference;
+    try {
     interpreted = await interpretPreference(query, genreNames);
-  } catch (err) {
+    } catch (err) {
     console.log("AI interpret failed, falling back to plain search:", err);
-    interpreted = { genres: [], type: "both" as const, mood: query };
-  }
+    interpreted = { genres: [], type: "both", mood: query };
+    }
 
   // If the user explicitly picked a mode (movie/tv), it overrides the AI's guess.
   const effectiveType: "movie" | "tv" | "both" =
