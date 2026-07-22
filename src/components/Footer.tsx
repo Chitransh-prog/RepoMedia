@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Github, Mail } from "lucide-react";
+import { Mail } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -43,14 +43,6 @@ export default function Footer() {
             <div className="flex gap-3">
               <a href="mailto:hello@repomedia.app" aria-label="Email">
                 <Mail size={18} className="text-zinc-500 hover:text-red-500" />
-              </a>
-              <a
-                href="https://github.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="GitHub"
-              >
-                <Github size={18} className="text-zinc-500 hover:text-red-500" />
               </a>
             </div>
           </div>
